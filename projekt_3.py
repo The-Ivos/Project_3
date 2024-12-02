@@ -155,6 +155,9 @@ def save_data():
         for i in ele_cont:
              file.write(i + "\n")
 
+        file.seek((file.tell()) -2)
+        file.write("  ")
+
 
 # HLAVNI PROGRAM
 
