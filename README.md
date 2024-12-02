@@ -11,3 +11,10 @@ Knihovny, které byly použity v kódu jsou uloženy v souboru `requirements.txt
 ``` python
 pip install -r requirements.txt 
 ```
+## Spuštění projektu
+
+Spuštění souboru `projekt_3.py` v rámci příkazového řádku požaduje dva povinné argumenty.
+```
+python projekt_3.py <odkaz-uzemniho-celku> <vysledny-soubor>
+```
+Následně se vám stáhnout výsledky jako soubor s příponou 
