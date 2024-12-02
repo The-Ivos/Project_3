@@ -9,5 +9,5 @@ Tento projekt slouží k extrahování výsledků z parlamentních voleb v roce 
 
 Knihovny, které byly použity v kódu jsou uloženy v souboru ´requirements.txt´
 ``` python
-print(ahoj)
+pip install -r requirements.txt 
 ```
