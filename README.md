@@ -7,7 +7,7 @@ Tento projekt slouží k extrahování výsledků z parlamentních voleb v roce 
 
 ## Instalace knihoven
 
-Knihovny, které byly použity v kódu jsou uloženy v souboru ´´´requirements.txt´´´
+Knihovny, které byly použity v kódu jsou uloženy v souboru "requirements.txt"
 ``` python
 pip install -r requirements.txt 
 ```
