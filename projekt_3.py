@@ -160,14 +160,15 @@ def check_args():
         print(f"Please check whether the webpage you specified as first argument is working!\nWe've got {str(requests.get(sys.argv[1]))} message! Program quit.")
         sys.exit()
 
+    elif "Page not found!" in str(requests.get(sys.argv[1]).content):
+        print(f"Page doesn't exist! Please check whether the url you provided is correct. Program quit.")
+        sys.exit()
+
     # KONTROLA ZE DRUHY ARGUMENT BUDE CSV FILE
     elif not sys.argv[2].endswith(".csv"):
         print("Second argument must be a CSV file (with suffix '.csv'). Program quit.")
         sys.exit()
 
-    elif "Page not found!" in str(requests.get(sys.argv[1]).content):
-        print(f"Page doesn't exist! Please check whether the url you provided is correct. Program quit.")
-        sys.exit()
 
 # FUNKCE ZAPSANI DAT DO VYSLEDNEHO CSV FILE
 def save_data():
