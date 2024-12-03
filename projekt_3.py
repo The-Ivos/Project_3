@@ -165,6 +165,10 @@ def check_args():
         print("Second argument must be a CSV file (with suffix '.csv'). Program quit.")
         sys.exit()
 
+    elif "Page not found!" in str(requests.get(sys.argv[1]).content):
+        print(f"Page doesn't exist! Please check whether the url you provided is correct. Program quit.")
+        sys.exit()
+
 # FUNKCE ZAPSANI DAT DO VYSLEDNEHO CSV FILE
 def save_data():
     print(f"SAVING DATA INTO FILE: {sys.argv[2]}")
