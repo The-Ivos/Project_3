@@ -158,7 +158,7 @@ def check_args():
         print(f"Please check whether the webpage you specified as first argument is working!\nWe've got {str(requests.get(sys.argv[1]))} message! Program quit.")
         sys.exit()
 
-    elif "Page not found!" in str(requests.get(sys.argv[1]).content):
+    elif "Page not found!" in str(requests.get(sys.argv[1]).content) or 'headers' not in str(requests.get(sys.argv[1]).content):
         print(f"Page doesn't exist! Please check whether the url you provided is correct. Program quit.")
         sys.exit()
 
