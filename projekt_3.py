@@ -62,7 +62,8 @@ def get_results(list_of_locs):
             delimiter_code = "Země a území:"
 
             loc_code = ((soup.select_one("#publikace > h3:nth-child(3)").getText()).strip()).split(delimiter_code)
-            elections["country"] = (loc_code[-1].strip())
+            elections["country"] = f'"{(loc_code[-1].strip())}"'
+
 
         # ZBYTEK OBCI
         else:
@@ -84,7 +85,7 @@ def get_results(list_of_locs):
                     continue
                 else:
                     loc_name += i
-            loc_name = loc_name.strip()
+            loc_name = f'"{loc_name.strip()}"'
 
         else:
             delimiter_name = "Obec: "
@@ -95,7 +96,7 @@ def get_results(list_of_locs):
             # ZBYTEK OBCI
             else:
                 loc_name = (soup.select_one("#publikace > h3:nth-child(4)").getText()).strip()
-            loc_name = loc_name[loc_name.find(delimiter_name)+len(delimiter_name):]
+            loc_name = f'"{loc_name[loc_name.find(delimiter_name)+len(delimiter_name):]}"'
 
         elections["location"] = loc_name
 
@@ -123,12 +124,9 @@ def get_results(list_of_locs):
 
         # CYCLE PRIDAVAJICI STRANY A JEJICH VYSLEDKY DO SLOVNIKU
         for i in range(len(parties)):
-            # PODMINKA PRO PRIPAD STRANY S CARKOU V NAZVU
-            if "," in parties[i].getText():
-                elections[f'"{parties[i].getText()}"'] = parties_votes[i].getText()
+
             # VYTVARENI KLICE A HODNOTY VE FORME 'STRANA':'POCET HLASU'
-            else:
-                elections[parties[i].getText()] = parties_votes[i].getText()
+            elections[f'"{parties[i].getText()}"'] = parties_votes[i].getText()
 
         # VYTVORENI HLAVICKY PRO CSV FILE
         elections_keys = ",".join(list(elections.keys()))
