@@ -151,7 +151,7 @@ def check_args():
 
     # KONTROLA VHODNE STRANKY PRO TENTO WEBSCRAPING
     elif not sys.argv[1].startswith("https://www.volby.cz/pls/ps2017nss/"):
-        print("First argument must be webpage from volby.cz! Program quit.")
+        print("First argument must be proper 'kraj' webpage from volby.cz! Program quit.")
         sys.exit()
 
     # KONTROLA ZE STRANKA BYLA NACTENA A FUNGUJE SPRAVNE
