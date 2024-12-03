@@ -15,8 +15,8 @@ def get_web():
     url = sys.argv[1]
     base_url_og = url.split("/")
 
-    # ULOZENI DO PROMENNE PRO PRIPAD PRAHY
-    url_praha.append(base_url_og[-1])
+    # ULOZENI DO PROMENNE PRO PRIPAD PRAHY NEBO ZAHRANICI
+    url_special.append(base_url_og[-1])
 
     # ULOZENI PROMENNE ZAKLADU WEBU
     base_url_og.pop(-1)
@@ -56,20 +56,47 @@ def get_results(list_of_locs):
         soup = bs(web,"html.parser")
 
         # KOD OBCE
-        delimiter_code = "obec="
-        loc_code = location[location.find(delimiter_code)+len(delimiter_code):location.find("&xvyber")]
-        elections["code"] = loc_code
 
-        # NAZEV OBCE
-        delimiter_name = "Obec: "
+        # PODMINKA PRO ZAHRANICI
+        if "ps36?" in url_special[0]:
+            delimiter_code = "Země a území:"
 
-        # PODMINKA PRO PRAZSKE OBCE
-        if "kraj=1&x" in url_praha[0]:
-            loc_name = (soup.select_one("#publikace > h3:nth-child(3)").getText()).strip()
+            loc_code = ((soup.select_one("#publikace > h3:nth-child(3)").getText()).strip()).split(delimiter_code)
+            elections["country"] = (loc_code[-1].strip())
+
         # ZBYTEK OBCI
         else:
-            loc_name = (soup.select_one("#publikace > h3:nth-child(4)").getText()).strip()
-        loc_name = loc_name[loc_name.find(delimiter_name)+len(delimiter_name):]
+            delimiter_code = "obec="
+            loc_code = location[location.find(delimiter_code)+len(delimiter_code):location.find("&xvyber")]
+            elections["code"] = loc_code
+
+        # NAZEV OBCE
+
+        # PODMINKA PRO ZAHRANICI
+        if "ps36?" in url_special[0]:
+            delimiter_name = "Okrsek: "
+
+            pre_loc_name = (soup.select_one("#publikace > h3:nth-child(4)").getText()).strip()
+            pre_loc_name = pre_loc_name[pre_loc_name.find(delimiter_name) + len(delimiter_name):]
+            loc_name = ""
+            for i in pre_loc_name:
+                if i.isdigit():
+                    continue
+                else:
+                    loc_name += i
+            loc_name = loc_name.strip()
+
+        else:
+            delimiter_name = "Obec: "
+
+            # PODMINKA PRO PRAZSKE OBCE
+            if "kraj=1&x" in url_special[0]:
+                loc_name = (soup.select_one("#publikace > h3:nth-child(3)").getText()).strip()
+            # ZBYTEK OBCI
+            else:
+                loc_name = (soup.select_one("#publikace > h3:nth-child(4)").getText()).strip()
+            loc_name = loc_name[loc_name.find(delimiter_name)+len(delimiter_name):]
+
         elections["location"] = loc_name
 
         # POCET REGISTROVANYCH VOLICU
@@ -166,7 +193,7 @@ check_args()
 
 # ZAKLADNI PROMENNE
 # PRO PRIPAD PRAHY - STRUKTURA STRANEK PRO JEJI OBCE SE LEHCE LISI OD ZBYTKU
-url_praha = []
+url_special = []
 
 # ZAKLAD VSTUPNI ADRESY STRANEK
 base_url = []
